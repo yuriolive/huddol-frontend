@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import { Drawer, Button, InputNumber, Form, Table } from 'antd';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { deselectRestaurant } from '../../actions/index';
+
 
 const columns = [{
     title: 'Product',
@@ -56,8 +60,8 @@ class Menu extends Component {
         placement="right"
         width={600}
         closable={true}
-        onClose={this.onClose}
-        visible={true}
+        onClose={() => this.props.deselectRestaurant()}
+        visible={this.props.selected}
       >
         <Form>
         
@@ -76,7 +80,7 @@ class Menu extends Component {
             textAlign: 'right',
           }}
         >
-          <Button onClick={this.onClose} style={{ marginRight: 8 }}>
+          <Button onClick={() => this.props.deselectRestaurant()} style={{ marginRight: 8 }}>
             Cancel
           </Button>
           <Button onClick={this.onClose} type="primary">
@@ -88,4 +92,10 @@ class Menu extends Component {
   }
 }
 
-export default Menu;
+const mapStateToProps = state => ({
+  selected: state.restaurants.selected
+});
+
+const matchDispatchToProps = dispatch => bindActionCreators({ deselectRestaurant }, dispatch);
+
+export default connect(mapStateToProps, matchDispatchToProps)(Menu);

@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Restaurant from './Restaurant.jsx';
 import Menu from './Menu.jsx';
-import { getRestaurants } from '../../actions/index';
+import { getRestaurants, selectRestaurant } from '../../actions/index';
 
 const { Content, Footer } = Layout;
 
@@ -22,7 +22,7 @@ class HomePage extends Component {
               { 
                 Array.isArray(this.props.restaurants) ? this.props.restaurants.map(r => (
                   <Col xs={24} sm={24} md={12} lg={6} xl={6} key={r.id} style={{ marginBottom: 24 }}>
-                    <Restaurant {...r}/>
+                    <Restaurant {...r} selectRestaurant={this.props.selectRestaurant}/>
                   </Col>)
                 ) : ''
               }
@@ -58,6 +58,6 @@ const mapStateToProps = state => ({
   restaurants: state.restaurants.values
 });
 
-const matchDispatchToProps = dispatch => bindActionCreators({ getRestaurants }, dispatch);
+const matchDispatchToProps = dispatch => bindActionCreators({ getRestaurants, selectRestaurant }, dispatch);
 
 export default connect(mapStateToProps, matchDispatchToProps)(HomePage);
