@@ -16,12 +16,19 @@ export const SELECT_ORDER_SUCCEEDED = 'SELECT_ORDER_SUCCEEDED';
 
 export const SELECT_ORDER_FAILED = 'SELECT_ORDER_FAILED';
 
+// Deselect order
+export const DESELECT_ORDER_REQUESTED = 'DESELECT_ORDER_REQUESTED';
+
+export const DESELECT_ORDER_SUCCEEDED = 'DESELECT_ORDER_SUCCEEDED';
+
+export const DESELECT_ORDER_FAILED = 'DESELECT_ORDER_FAILED';
+
 // Get order menu
-export const GET_ORDER_MENU_REQUESTED = 'GET_ORDER_MENU_REQUESTED';
+export const GET_ORDER_REQUESTED = 'GET_ORDER_MENU_REQUESTED';
 
-export const GET_ORDER_MENU_SUCCEEDED = 'GET_ORDER_MENU_SUCCEEDED';
+export const GET_ORDER_SUCCEEDED = 'GET_ORDER_MENU_SUCCEEDED';
 
-export const GET_ORDER_MENU_FAILED = 'GET_ORDER_MENU_FAILED';
+export const GET_ORDER_FAILED = 'GET_ORDER_MENU_FAILED';
 
 /*
  * Action creators
@@ -31,4 +38,4 @@ export const getOrders = () => ({ type: GET_ORDERS_REQUESTED });
 
 export const selectOrder = id => ({ type: SELECT_ORDER_REQUESTED, payload: id });
 
-export const getOrderMenu = id => ({ type: GET_ORDER_MENU_REQUESTED, payload: id });
+export const getOrder = id => ({ type: GET_ORDER_REQUESTED, payload: id });

@@ -1,7 +1,10 @@
 import { combineReducers } from 'redux';
 import { connectRouter } from 'connected-react-router';
+import OrdersReducer from './reducer-orders';
+import RestaurantsReducer from './reducer-restaurants';
 
 export default (history) => combineReducers({
   router: connectRouter(history),
-  // rest of your reducers
+  orders: OrdersReducer,
+  restaurants: RestaurantsReducer
 });

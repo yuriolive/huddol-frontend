@@ -16,6 +16,13 @@ export const SELECT_RESTAURANT_SUCCEEDED = 'SELECT_RESTAURANT_SUCCEEDED';
 
 export const SELECT_RESTAURANT_FAILED = 'SELECT_RESTAURANT_FAILED';
 
+// Deselect restaurant
+export const DESELECT_RESTAURANT_REQUESTED = 'DESELECT_RESTAURANT_REQUESTED';
+
+export const DESELECT_RESTAURANT_SUCCEEDED = 'DESELECT_RESTAURANT_SUCCEEDED';
+
+export const DESELECT_RESTAURANT_FAILED = 'DESELECT_RESTAURANT_FAILED';
+
 // Get restaurant menu
 export const GET_RESTAURANT_MENU_REQUESTED = 'GET_RESTAURANT_MENU_REQUESTED';
 
@@ -31,4 +38,4 @@ export const getRestaurants = () => ({ type: GET_RESTAURANTS_REQUESTED });
 
 export const selectRestaurant = id => ({ type: SELECT_RESTAURANT_REQUESTED, payload: id });
 
-export const getRestaurantMenu = id => ({ type: GET_RESTAURANT_MENU_REQUESTED, payload: id });
+export const getRestaurantMenu = menu => ({ type: GET_RESTAURANT_MENU_REQUESTED, payload: menu });
