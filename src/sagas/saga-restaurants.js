@@ -1,4 +1,5 @@
 import { call, put, all, takeEvery } from 'redux-saga/effects';
+import { getRestaurantsCall } from '../api/api-restaurants';
 import {
   GET_RESTAURANTS_REQUESTED,
   GET_RESTAURANTS_SUCCEEDED,
@@ -17,26 +18,26 @@ import {
 export function* getRestaurants() {
   try {
     // TODO Make API Request
-    const restaurants = [{
+ /*   const restaurants = [{
       id: '1',
-      name: 'Huddols Burguers',
-      category: 'Burguers', 
+      name: 'Huddols Pizzas Place',
+      category: 'Pizza', 
       price: 3,
       rating: 4.5,
-      deliveryTime: 45
+      processTime: 45
     }, {
       id: '2',
-      name: 'Huddols Pizzas',
+      name: 'Huddols Pizzas Park',
       category: 'Pizza', 
       price: 2,
       rating: 4.8,
-      deliveryTime: 20
-    }];
-    
+      processTime: 20
+    }];*/
+    let { data } = yield call(getRestaurantsCall);
     // Response
     yield put({
       type: GET_RESTAURANTS_SUCCEEDED,
-      payload: restaurants,
+      payload: data.data,
     });
   } catch (e) {
     yield put({ type: GET_RESTAURANTS_FAILED, message: e.message });

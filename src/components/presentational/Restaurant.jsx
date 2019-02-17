@@ -6,8 +6,8 @@ const Panel = Collapse.Panel;
 const CardRate = props => (<span><Icon type="star" theme="filled" /> {props.rating}</span>);
 
 export default props => (
-  <Card hoverable title={props.name} extra={<CardRate rating={props.rating}/>} onClick={() => props.selectRestaurant(props.id)}>
+  <Card hoverable title={props.name} extra={<CardRate rating={props.rating.toFixed(1)}/>} onClick={() => props.selectRestaurant(props.id)}>
     <p>{props.category} • {'$'.repeat(props.price)}</p>
-    <p>{props.deliveryTime}min</p>
+    <p>{props.processTime}min</p>
   </Card>
 );

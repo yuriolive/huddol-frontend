@@ -13,7 +13,7 @@ import {
 export function* submitOrder(action) {
   try {
     // Make API Request
-    let { data } = yield call(submitOrderCall, action.payload);
+    // let { data } = yield call(submitOrderCall, action.payload);
 
     // Response
     yield put({

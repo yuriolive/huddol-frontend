@@ -1,4 +1,4 @@
 export default {
-    domain: 'jsonplaceholder.typicode.com',
+    domain: 'huddol-backend.herokuapp.com/api',
     protocol: 'https'
 };
