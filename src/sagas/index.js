@@ -1,10 +1,14 @@
 // Worker Saga: access API
 // Watcher Saga: listen for actions to be dispatched and call the worker
 import { all } from 'redux-saga/effects';
-import { watchRestaurants } from './saga-restaurants';
+import { watchSubmitOrder } from './saga-orders';
+import { watchRestaurants, watchRestaurantMenu, watchSelectRestaurant } from './saga-restaurants';
 
 export default function* Sagas() {
   yield all([
-    watchRestaurants()
+    watchSubmitOrder(),
+    watchRestaurants(),
+    watchRestaurantMenu(),
+    watchSelectRestaurant()
   ]);
 }

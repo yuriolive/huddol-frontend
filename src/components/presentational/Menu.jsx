@@ -2,58 +2,26 @@ import React, { Component } from 'react';
 import { Drawer, Button, InputNumber, Form, Table } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { deselectRestaurant } from '../../actions/index';
-
-
-const columns = [{
-    title: 'Product',
-    dataIndex: 'product',
-    key: 'product',
-  }, {
-    title: 'Price',
-    dataIndex: 'price',
-    key: 'price',
-    render: p => (`$ ${p.toFixed(2)}`)
-  }, {
-    title: 'Quantity',
-    dataIndex: 'quantity',
-    key: 'quantity',
-    render: q => (<InputNumber min={0} defaultValue={q} />)
-  }];
-
-const data = [{
-  key: '1',
-  product: 'Cheese slice',
-  quantity: 2,
-  price: 10
-}, {
-  key: '2',
-  product: 'Bacon slice',
-  quantity: 1,
-  price: 15
-}];
+import { deselectRestaurant, updateRestaurantMenu, submitOrder } from '../../actions/index';
 
 class Menu extends Component {
-    
-  showDrawer = () => {
-    this.setState({
-      visible: true,
-    });
-  };
-
-  onClose = () => {
-    this.setState({
-      visible: false,
-    });
-  };
-
-  onChange = (e) => {
-    this.setState({
-      placement: e.target.value,
-    });
-  }
-  
   render() {
+    const columns = [{
+      title: 'Product',
+      dataIndex: 'product',
+      key: 'product',
+    }, {
+      title: 'Price',
+      dataIndex: 'price',
+      key: 'price',
+      render: p => (`$ ${p.toFixed(2)}`)
+    }, {
+      title: 'Quantity',
+      dataIndex: 'quantity',
+      key: 'quantity',
+      render: (q, r) => (<InputNumber min={0} value={q} disabled={this.props.isSubmitting === true} onChange={val => this.props.updateRestaurantMenu(val, r.key)} />)
+    }];
+  
     return (
       <Drawer
         title="Place order"
@@ -61,13 +29,10 @@ class Menu extends Component {
         width={600}
         closable={true}
         onClose={() => this.props.deselectRestaurant()}
-        visible={this.props.selected}
+        visible={this.props.selected !== false && typeof(this.props.selected) !== 'undefined'}
       >
-        <Form>
-        
-        </Form>
-        <Table columns={columns} dataSource={data} pagination={false} />
-        <h4>Subtotal: $ 123.00</h4>
+        <Table columns={columns} dataSource={this.props.menu} pagination={false} />
+        <h3 style={{ marginTop: 30 }}>Total: $ {(Array.isArray(this.props.menu) ? this.props.menu.map(m => m.quantity * m.price).reduce((acc, curr) => (acc + curr)) : 0).toFixed(2)}</h3>
         <div
           style={{
             position: 'absolute',
@@ -83,7 +48,7 @@ class Menu extends Component {
           <Button onClick={() => this.props.deselectRestaurant()} style={{ marginRight: 8 }}>
             Cancel
           </Button>
-          <Button onClick={this.onClose} type="primary">
+          <Button loading={this.props.isSubmitting === true} onClick={() => this.props.submitOrder(this.props.selected, this.props.menu)} type="primary" >
             Submit
           </Button>
         </div>
@@ -93,9 +58,11 @@ class Menu extends Component {
 }
 
 const mapStateToProps = state => ({
-  selected: state.restaurants.selected
+  selected: state.restaurants.selected,
+  menu: state.restaurants.menu,
+  isSubmitting: state.orders.isSubmitting
 });
 
-const matchDispatchToProps = dispatch => bindActionCreators({ deselectRestaurant }, dispatch);
+const matchDispatchToProps = dispatch => bindActionCreators({ updateRestaurantMenu, deselectRestaurant, submitOrder }, dispatch);
 
 export default connect(mapStateToProps, matchDispatchToProps)(Menu);

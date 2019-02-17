@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { Layout, Menu } from 'antd';
 import { Route, Switch } from 'react-router'; // react-router v4
+import { Link } from 'react-router-dom'; // react-router v4
 import HomePage from './components/presentational/HomePage.jsx';
 import OrdersPage from './components/presentational/OrdersPage.jsx';
 
@@ -18,8 +19,8 @@ class App extends Component {
             defaultSelectedKeys={['1']}
             style={{ lineHeight: '64px' }}
           >
-            <Menu.Item key="1">Restaurants</Menu.Item>
-            <Menu.Item key="2">Orders</Menu.Item>
+            <Menu.Item key="1"><Link to="/">Restaurants</Link></Menu.Item>
+            <Menu.Item key="2"><Link to="/orders">Orders</Link></Menu.Item>
           </Menu>
         </Header>
         <Switch>

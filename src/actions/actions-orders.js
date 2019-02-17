@@ -30,10 +30,19 @@ export const GET_ORDER_SUCCEEDED = 'GET_ORDER_MENU_SUCCEEDED';
 
 export const GET_ORDER_FAILED = 'GET_ORDER_MENU_FAILED';
 
+// Submit order
+export const SUBMIT_ORDER_REQUESTED = 'SUBMIT_ORDER_REQUESTED';
+
+export const SUBMIT_ORDER_SUCCEEDED = 'SUBMIT_ORDER_SUCCEEDED';
+
+export const SUBMIT_ORDER_FAILED = 'SUBMIT_ORDER_FAILED';
+
 /*
  * Action creators
  */
- 
+
+export const submitOrder = (restaurant, menu) => ({ type: SUBMIT_ORDER_REQUESTED, payload: { restaurant, menu } });
+
 export const getOrders = () => ({ type: GET_ORDERS_REQUESTED });
 
 export const selectOrder = id => ({ type: SELECT_ORDER_REQUESTED, payload: id });
