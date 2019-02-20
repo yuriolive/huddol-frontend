@@ -8,8 +8,8 @@ class Menu extends Component {
   render() {
     const columns = [{
       title: 'Product',
-      dataIndex: 'product',
-      key: 'product',
+      dataIndex: 'name',
+      key: 'name',
     }, {
       title: 'Price',
       dataIndex: 'price',
@@ -19,7 +19,7 @@ class Menu extends Component {
       title: 'Quantity',
       dataIndex: 'quantity',
       key: 'quantity',
-      render: (q, r) => (<InputNumber min={0} value={q} disabled={this.props.isSubmitting === true} onChange={val => this.props.updateRestaurantMenu(val, r.key)} />)
+      render: (q, r) => (<InputNumber min={0} value={q} disabled={this.props.isSubmitting === true} onChange={val => this.props.updateRestaurantMenu(val, r.id)} />)
     }];
   
     return (
@@ -27,11 +27,11 @@ class Menu extends Component {
         title="Place order"
         placement="right"
         width={600}
-        closable={true}
+        closable={this.props.isSubmitting ? false : true}
         onClose={() => this.props.deselectRestaurant()}
         visible={this.props.selected !== false && typeof(this.props.selected) !== 'undefined'}
       >
-        <Table columns={columns} dataSource={this.props.menu} pagination={false} />
+        <Table columns={columns} dataSource={this.props.menu} pagination={false} rowKey="id" />
         <h3 style={{ marginTop: 30 }}>Total: $ {(Array.isArray(this.props.menu) ? this.props.menu.map(m => m.quantity * m.price).reduce((acc, curr) => (acc + curr)) : 0).toFixed(2)}</h3>
         <div
           style={{
@@ -45,10 +45,14 @@ class Menu extends Component {
             textAlign: 'right',
           }}
         >
-          <Button onClick={() => this.props.deselectRestaurant()} style={{ marginRight: 8 }}>
+          <Button onClick={() => this.props.deselectRestaurant()} style={{ marginRight: 8 }} disabled={this.props.isSubmitting}>
             Cancel
           </Button>
-          <Button loading={this.props.isSubmitting === true} onClick={() => this.props.submitOrder(this.props.selected, this.props.menu)} type="primary" >
+          <Button
+            loading={this.props.isSubmitting === true} 
+            onClick={() => this.props.submitOrder(this.props.selected, this.props.menu.filter(p => p.quantity > 0).map(p => ({ product_id: p.id, quantity: p.quantity })))}
+            disabled={!Array.isArray(this.props.menu) || this.props.menu.map(m => m.quantity).reduce((acc, curr) => acc + curr) === 0}
+            type="primary" >
             Submit
           </Button>
         </div>

@@ -1,5 +1,5 @@
 import { call, put, all, takeEvery } from 'redux-saga/effects';
-import { getRestaurantsCall } from '../api/api-restaurants';
+import { getRestaurantsCall, getRestaurantMenuCall } from '../api/api-restaurants';
 import {
   GET_RESTAURANTS_REQUESTED,
   GET_RESTAURANTS_SUCCEEDED,
@@ -17,22 +17,6 @@ import {
  */
 export function* getRestaurants() {
   try {
-    // TODO Make API Request
- /*   const restaurants = [{
-      id: '1',
-      name: 'Huddols Pizzas Place',
-      category: 'Pizza', 
-      price: 3,
-      rating: 4.5,
-      processTime: 45
-    }, {
-      id: '2',
-      name: 'Huddols Pizzas Park',
-      category: 'Pizza', 
-      price: 2,
-      rating: 4.8,
-      processTime: 20
-    }];*/
     let { data } = yield call(getRestaurantsCall);
     // Response
     yield put({
@@ -55,20 +39,12 @@ export function* watchRestaurants() {
 export function* getRestaurantMenu(action) {
   try {
     // TODO Make API Request action.payload.id
-    const restaurantMenu = [{
-      key: '1',
-      product: 'Cheese slice',
-      price: 10
-    }, {
-      key: '2',
-      product: 'Bacon slice',
-      price: 15
-    }];
+    let { data } = yield call(getRestaurantMenuCall, action.payload);
         
     // Response
     yield put({
       type: GET_RESTAURANT_MENU_SUCCEEDED,
-      payload: restaurantMenu.map(rm => ({ ...rm, quantity: 0 })),
+      payload: data.data.menu.map(rm => ({ ...rm, quantity: 0 })),
     });
   } catch (e) {
     yield put({ type: GET_RESTAURANT_MENU_FAILED, message: e.message });

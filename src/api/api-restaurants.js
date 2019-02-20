@@ -2,7 +2,7 @@ import axios from 'axios';
 import config from './config';
 
 // Get restaurants
-export const getRestaurantsCall = (data) => {
+export const getRestaurantsCall = () => {
   return axios.request({
     method: 'get',
     url: `${config.protocol}://${config.domain}/restaurants`
@@ -10,3 +10,9 @@ export const getRestaurantsCall = (data) => {
 };
 
 // Get restaurant menu
+export const getRestaurantMenuCall = id => {
+  return axios.request({
+    method: 'get',
+    url: `${config.protocol}://${config.domain}/restaurants/${id}`
+  });
+};

@@ -41,7 +41,7 @@ export const SUBMIT_ORDER_FAILED = 'SUBMIT_ORDER_FAILED';
  * Action creators
  */
 
-export const submitOrder = (restaurant, menu) => ({ type: SUBMIT_ORDER_REQUESTED, payload: { restaurant, menu } });
+export const submitOrder = (restaurant_id, menu) => ({ type: SUBMIT_ORDER_REQUESTED, payload: { restaurant_id, menu } });
 
 export const getOrders = () => ({ type: GET_ORDERS_REQUESTED });
 

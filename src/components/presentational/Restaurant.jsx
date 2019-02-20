@@ -8,6 +8,6 @@ const CardRate = props => (<span><Icon type="star" theme="filled" /> {props.rati
 export default props => (
   <Card hoverable title={props.name} extra={<CardRate rating={props.rating.toFixed(1)}/>} onClick={() => props.selectRestaurant(props.id)}>
     <p>{props.category} • {'$'.repeat(props.price)}</p>
-    <p>{props.processTime}min</p>
+    <p>{props.process_time}min</p>
   </Card>
 );

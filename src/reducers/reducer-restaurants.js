@@ -19,10 +19,10 @@ export default function (state = {}, action) {
     case DESELECT_RESTAURANT_REQUESTED:
       return { ...state, selected: false, menu: null };
     case UPDATE_RESTAURANT_MENU_REQUESTED:
-      const product = state.menu.find(p => p.key === action.payload.id);
+      const product = state.menu.find(p => p.id === action.payload.id);
       return { 
         ...state,
-        menu: [ ...state.menu.filter(p => p.key !== action.payload.id), { ...product, quantity: action.payload.quantity } ].sort((a, b) => (a.key - b.key)) 
+        menu: [ ...state.menu.filter(p => p.id !== action.payload.id), { ...product, quantity: action.payload.quantity } ].sort((a, b) => (a.id - b.id)) 
       };
     case GET_RESTAURANT_MENU_SUCCEEDED:
       return { ...state, menu: action.payload };
