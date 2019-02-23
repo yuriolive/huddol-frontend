@@ -3,8 +3,9 @@ import { Layout, Row, Col } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Restaurant from './Restaurant.jsx';
-import Menu from './Menu.jsx';
+import RestaurantMenu from '../container/RestaurantMenu.jsx';
 import { getRestaurants, selectRestaurant } from '../../actions/index';
+import Page from './Page.jsx';
 
 const { Content, Footer } = Layout;
 
@@ -15,26 +16,17 @@ class HomePage extends Component {
 
   render() {
     return (
-      <div>
-        <Layout style={{ padding: '24px 24px 24px' }}>
-          <Content style={{ background: '#fff', padding: 24 }}>
-            <Row gutter={16}>
-              { 
-                Array.isArray(this.props.restaurants) ? this.props.restaurants.map(r => (
-                  <Col xs={24} sm={24} md={12} lg={6} xl={6} key={r.id} style={{ marginBottom: 24 }}>
-                    <Restaurant {...r} selectRestaurant={this.props.selectRestaurant}/>
-                  </Col>)
-                ) : ''
-              }
-            </Row>
-          </Content>
-          <Footer style={{ textAlign: 'center' }}>
-           <h3>Huddol Delivery</h3>
-           Created by Yuri Olive
-          </Footer>
-        </Layout>
-        <Menu />
-      </div>
+      <Page menu={<RestaurantMenu />}>
+        <Row gutter={16}>
+          { 
+            Array.isArray(this.props.restaurants) ? this.props.restaurants.map(r => (
+              <Col xs={24} sm={24} md={12} lg={6} xl={6} key={r.id} style={{ marginBottom: 24 }}>
+                <Restaurant {...r} selectRestaurant={this.props.selectRestaurant}/>
+              </Col>)
+            ) : ''
+          }
+        </Row>
+      </Page>
     );
   }
 }

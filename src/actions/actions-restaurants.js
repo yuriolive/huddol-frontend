@@ -37,7 +37,7 @@ export const getRestaurants = () => ({ type: GET_RESTAURANTS_REQUESTED });
 
 export const selectRestaurant = id => ({ type: SELECT_RESTAURANT_REQUESTED, payload: id });
 
-export const deselectRestaurant = id => ({ type: DESELECT_RESTAURANT_REQUESTED });
+export const deselectRestaurant = () => ({ type: DESELECT_RESTAURANT_REQUESTED });
 
 export const getRestaurantMenu = id => ({ type: GET_RESTAURANT_MENU_REQUESTED, payload: id });
 

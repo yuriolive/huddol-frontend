@@ -2,27 +2,16 @@
 import React, { Component } from 'react';
 import { Layout, Menu } from 'antd';
 import { Route, Switch } from 'react-router'; // react-router v4
-import { Link } from 'react-router-dom'; // react-router v4
+import { connect } from 'react-redux';
 import HomePage from './components/presentational/HomePage.jsx';
 import OrdersPage from './components/presentational/OrdersPage.jsx';
-
-const { Header } = Layout;
+import Header from './components/presentational/Header.jsx';
 
 class App extends Component {
   render() {
     return (
       <Layout>
-        <Header className="header">
-          <Menu
-            theme="dark"
-            mode="horizontal"
-            defaultSelectedKeys={['1']}
-            style={{ lineHeight: '64px' }}
-          >
-            <Menu.Item key="1"><Link to="/">Restaurants</Link></Menu.Item>
-            <Menu.Item key="2"><Link to="/orders">Orders</Link></Menu.Item>
-          </Menu>
-        </Header>
+        <Header current={this.props.router.location.pathname}/>
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/orders" component={OrdersPage} />
@@ -33,4 +22,10 @@ class App extends Component {
   }
 }
 
-export default App;
+
+const mapStateToProps = state => ({
+  router: state.router
+});
+
+
+export default connect(mapStateToProps)(App);

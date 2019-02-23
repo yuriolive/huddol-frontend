@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import { Drawer, Button, InputNumber, Form, Table } from 'antd';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { deselectRestaurant, updateRestaurantMenu, submitOrder } from '../../actions/index';
+import { Drawer, Button, InputNumber, Table } from 'antd';
 
 class Menu extends Component {
   render() {
@@ -19,16 +16,18 @@ class Menu extends Component {
       title: 'Quantity',
       dataIndex: 'quantity',
       key: 'quantity',
-      render: (q, r) => (<InputNumber min={0} value={q} disabled={this.props.isSubmitting === true} onChange={val => this.props.updateRestaurantMenu(val, r.id)} />)
+      render: (q, r) => (<InputNumber min={0} value={q} disabled={this.props.isSubmitting === true} onChange={val => this.props.updateMenu(val, r.id)} />)
     }];
   
     return (
       <Drawer
-        title="Place order"
+        title={this.props.title}
         placement="right"
         width={600}
         closable={this.props.isSubmitting ? false : true}
-        onClose={() => this.props.deselectRestaurant()}
+        onClose={() => {
+          if(!this.props.isSubmitting) { this.props.deselect() }
+        }}
         visible={this.props.selected !== false && typeof(this.props.selected) !== 'undefined'}
       >
         <Table columns={columns} dataSource={this.props.menu} pagination={false} rowKey="id" />
@@ -44,13 +43,14 @@ class Menu extends Component {
             background: '#fff',
             textAlign: 'right',
           }}
-        >
-          <Button onClick={() => this.props.deselectRestaurant()} style={{ marginRight: 8 }} disabled={this.props.isSubmitting}>
+        > 
+          { 'deleteRequest' in this.props ? <Button type="danger" onClick={() => this.props.deleteRequest(this.props.selected)} style={{ float: 'left' }}>Delete</Button> : '' }
+          <Button onClick={() => this.props.deselect()} style={{ marginRight: 8 }} disabled={this.props.isSubmitting}>
             Cancel
           </Button>
           <Button
             loading={this.props.isSubmitting === true} 
-            onClick={() => this.props.submitOrder(this.props.selected, this.props.menu.filter(p => p.quantity > 0).map(p => ({ product_id: p.id, quantity: p.quantity })))}
+            onClick={() => this.props.submit(this.props.selected, this.props.menu.filter(p => p.quantity > 0).map(p => ({ product_id: p.id, quantity: p.quantity })))}
             disabled={!Array.isArray(this.props.menu) || this.props.menu.map(m => m.quantity).reduce((acc, curr) => acc + curr) === 0}
             type="primary" >
             Submit
@@ -61,12 +61,4 @@ class Menu extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  selected: state.restaurants.selected,
-  menu: state.restaurants.menu,
-  isSubmitting: state.orders.isSubmitting
-});
-
-const matchDispatchToProps = dispatch => bindActionCreators({ updateRestaurantMenu, deselectRestaurant, submitOrder }, dispatch);
-
-export default connect(mapStateToProps, matchDispatchToProps)(Menu);
+export default Menu;

@@ -19,4 +19,18 @@ export const submitOrderCall = (data) => {
   });
 };
 
-// Update order
+// Get order menu
+export const getOrderMenuCall = id => {
+  return axios.request({
+    method: 'get',
+    url: `${config.protocol}://${config.domain}/orders/${id}`
+  });
+};
+
+// Delete order
+export const deleteOrderCall = id => {
+  return axios.request({
+    method: 'delete',
+    url: `${config.protocol}://${config.domain}/orders/${id}`
+  });
+};

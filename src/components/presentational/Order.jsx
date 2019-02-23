@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Card, Rate, Icon, Collapse } from 'antd';
+import { Card, Button } from 'antd';
 
 export default props => (
-  <Card hoverable title={props.name}>
-    <p>{props.category} • {'$'.repeat(props.price)}</p>
-    <p>{props.delivery_time}min</p>
+  <Card
+    title={`Order on ${props.restaurant.name}`}
+    extra={<Button type="danger" block onClick={() => props.deleteOrder(props.id)}>DELETE</Button>}>
+    <p>Order ID: {props.id}</p>
   </Card>
 );
