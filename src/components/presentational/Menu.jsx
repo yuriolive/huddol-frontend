@@ -16,7 +16,7 @@ class Menu extends Component {
       title: 'Quantity',
       dataIndex: 'quantity',
       key: 'quantity',
-      render: (q, r) => (<InputNumber min={0} value={q} disabled={this.props.isSubmitting === true} onChange={val => this.props.updateMenu(val, r.id)} />)
+      render: (q, r) => (<InputNumber min={0} value={q} disabled={this.props.isSubmitting === true || this.props.submitDisabled === true} onChange={val => this.props.updateMenu(val, r.id)} />)
     }];
   
     return (
@@ -44,17 +44,23 @@ class Menu extends Component {
             textAlign: 'right',
           }}
         > 
+          
           { 'deleteRequest' in this.props ? <Button type="danger" onClick={() => this.props.deleteRequest(this.props.selected)} style={{ float: 'left' }}>Delete</Button> : '' }
-          <Button onClick={() => this.props.deselect()} style={{ marginRight: 8 }} disabled={this.props.isSubmitting}>
-            Cancel
-          </Button>
-          <Button
-            loading={this.props.isSubmitting === true} 
-            onClick={() => this.props.submit(this.props.selected, this.props.menu.filter(p => p.quantity > 0).map(p => ({ product_id: p.id, quantity: p.quantity })))}
-            disabled={!Array.isArray(this.props.menu) || this.props.menu.map(m => m.quantity).reduce((acc, curr) => acc + curr) === 0}
-            type="primary" >
-            Submit
-          </Button>
+          
+          { this.props.submitDisabled === true ? '' : (
+            <span>
+              <Button onClick={() => this.props.deselect()} style={{ marginRight: 8 }} disabled={this.props.isSubmitting}>
+                Cancel
+              </Button>
+              <Button
+                loading={this.props.isSubmitting === true} 
+                onClick={() => this.props.submit(this.props.selected, this.props.menu.filter(p => p.quantity > 0).map(p => ({ product_id: p.id, quantity: p.quantity })))}
+                disabled={!Array.isArray(this.props.menu) || this.props.menu.map(m => m.quantity).reduce((acc, curr) => acc + curr) === 0}
+                type="primary" >
+                Submit
+              </Button>
+            </span>
+          ) }
         </div>
       </Drawer>
     );

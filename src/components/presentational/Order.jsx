@@ -3,8 +3,9 @@ import { Card, Button } from 'antd';
 
 export default props => (
   <Card
+    hoverable
     title={`Order on ${props.restaurant.name}`}
-    extra={<Button type="danger" block onClick={() => props.deleteOrder(props.id)}>DELETE</Button>}>
+    onClick={() => props.selectOrder(props.id)}>
     <p>Order ID: {props.id}</p>
   </Card>
 );

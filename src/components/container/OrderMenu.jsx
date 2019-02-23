@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { deselectOrder as deselect, updateOrderMenu as updateMenu, updateOrder as submit, deleteOrder as deleteRequest } from '../../actions/index';
 import Menu from '../presentational/Menu.jsx';
 
-const OrderMenu = (props) => (<Menu {...props} title="Update Order" />);
+const OrderMenu = (props) => (<Menu {...props} title="Update Order" submitDisabled />);
 
 const mapStateToProps = state => ({
   selected: state.orders.selected,

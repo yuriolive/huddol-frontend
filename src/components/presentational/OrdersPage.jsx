@@ -21,7 +21,7 @@ class HomePage extends Component {
           { 
             Array.isArray(this.props.orders) ? this.props.orders.map(r => (
               <Col xs={24} sm={24} md={12} lg={6} xl={6} key={r.id} style={{ marginBottom: 24 }}>
-                <Order {...r} selectOrder={this.props.selectOrder} deleteOrder={this.props.deleteOrder}/>
+                <Order {...r} selectOrder={this.props.selectOrder} />
               </Col>)
             ) : ''
           }
